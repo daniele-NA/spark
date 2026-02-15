@@ -18,8 +18,6 @@ android {
         versionName = "1.0"
     }
 
-
-
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
@@ -27,12 +25,6 @@ android {
 
     kotlinOptions {
         jvmTarget = "17"
-    }
-
-    sourceSets {
-        getByName("main") {
-            jniLibs.srcDirs("jniLibs")
-        }
     }
 
     buildTypes{
@@ -58,6 +50,7 @@ dependencies {
     implementation("androidx.core:core-splashscreen:1.0.1")
 }
 
+// == AUTOMATICALLY TRIGGERED == //
 tasks.register<Exec>("build_rust") {
     group = "rust"
 
@@ -74,7 +67,7 @@ tasks.register<Exec>("build_rust") {
             isIgnoreExitValue = true
         }
         if (result.exitValue != 0) {
-            println("cargo-ndk non trovato, lo installo...")
+            println("cargo-ndk not found...installing it")
             exec {
                 commandLine(cargoPath, "install", "cargo-ndk")
             }
@@ -95,5 +88,5 @@ tasks.register<Exec>("build_rust") {
 
 
 tasks.named("preBuild") {
-    dependsOn("clean")
+    dependsOn("build_rust")
 }

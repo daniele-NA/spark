@@ -6,3 +6,6 @@
 .kotlin
 *.cxx
 local.properties
+*Cargo.lock
+**/target/
+**/*.so
