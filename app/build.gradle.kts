@@ -1,0 +1,99 @@
+@file:Suppress("UnstableApiUsage","NewerVersionAvailable","UseTomlInstead","GradleDependency")
+plugins {
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.compose)
+}
+
+android {
+    namespace = "com.crescenzi.spark"
+    compileSdk = 36
+
+    ndkVersion = "29.0.13846066"
+    defaultConfig {
+        applicationId = "com.crescenzi.spark"
+        minSdk = 29
+        targetSdk = 36
+        versionCode = 1
+        versionName = "1.0"
+    }
+
+
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = "17"
+    }
+
+    sourceSets {
+        getByName("main") {
+            jniLibs.srcDirs("jniLibs")
+        }
+    }
+
+    buildTypes{
+        release {
+            isMinifyEnabled = true
+            isShrinkResources = true
+        }
+    }
+
+    buildFeatures {
+        viewBinding = true
+        compose = true
+    }
+}
+
+dependencies {
+    implementation("androidx.core:core-ktx:1.17.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.9.3")
+    implementation("androidx.activity:activity-compose:1.8.2")
+    implementation("androidx.compose.ui:ui:1.6.0")
+    implementation("androidx.compose.material:material:1.6.0")
+    implementation("androidx.compose.ui:ui-tooling-preview:1.6.0")
+    implementation("androidx.core:core-splashscreen:1.0.1")
+}
+
+tasks.register<Exec>("build_rust") {
+    group = "rust"
+
+    // == WE DETECT RUST INTO OUR SYSTEM == //
+    val cargoPath = "${System.getProperty("user.home")}/.cargo/bin/cargo"
+    print(projectDir.path)
+
+    val mainDirectory = "${projectDir.path}/src/main"
+
+    // == IF CARGO-NDK IS NOT INSTALLED,WE REPAIR INSTALLING IT == //
+    doFirst {
+        val result = exec {
+            commandLine(cargoPath, "ndk", "--help")
+            isIgnoreExitValue = true
+        }
+        if (result.exitValue != 0) {
+            println("cargo-ndk non trovato, lo installo...")
+            exec {
+                commandLine(cargoPath, "install", "cargo-ndk")
+            }
+        }
+    }
+
+    workingDir("$mainDirectory/jni")
+    commandLine(
+        cargoPath, "ndk",
+        "-t", "arm64-v8a",
+        "-t", "armeabi-v7a",
+        "-t", "x86",
+        "-t", "x86_64",
+        "-o", "$mainDirectory/jniLibs",
+        "build", "--release"
+    )
+}
+
+
+tasks.named("preBuild") {
+    dependsOn("clean")
+}
