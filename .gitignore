@@ -1,9 +1,9 @@
 # Project exclude paths
-/.gradle/
-/app/build/
-/build/
-.idea
-.kotlin
+**/.gradle/
+**/app/build/
+**/build/
+**/.idea
+*.kotlin
 *.cxx
 local.properties
 *Cargo.lock
