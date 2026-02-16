@@ -8,4 +8,6 @@
 local.properties
 *Cargo.lock
 **/target/
+**/release/
 **/*.so
+test.jks

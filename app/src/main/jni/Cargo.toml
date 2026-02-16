@@ -10,3 +10,7 @@ crate-type = ["cdylib"]
 
 # == USED FOR ANDROID INTEROP == //
 jni = "0.21"
+
+reqwest = { version = "0.11", default-features = false, features = ["json", "rustls-tls"] }
+tokio = { version = "1", features = ["full"] }
+serde = { version = "1", features = ["derive"] }
