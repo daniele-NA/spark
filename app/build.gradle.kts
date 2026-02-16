@@ -9,6 +9,7 @@ android {
     namespace = "com.crescenzi.spark"
     compileSdk = 36
 
+    // == USE THIS VERSION OF NDK FOR 16 KB ALIGNMENT (REQUIRED FOR PLAY STORE) == //
     ndkVersion = "29.0.13846066"
     defaultConfig {
         applicationId = "com.crescenzi.spark"
@@ -35,7 +36,6 @@ android {
     }
 
     buildFeatures {
-        viewBinding = true
         compose = true
     }
 }

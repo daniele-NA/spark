@@ -23,6 +23,7 @@ class MainActivity : ComponentActivity() {
         installSplashScreen().setKeepOnScreenCondition { sleep(800); false }
         super.onCreate(savedInstanceState)
 
+        // == CALL NATIVE METHODS == //
         Log.e("MY-LOG", "SUM => ${sum(50, 50)}")
         lifecycleScope.launch(Dispatchers.IO) {
             Log.e("MY-LOG", "CALL-API => ${callApi()}")
