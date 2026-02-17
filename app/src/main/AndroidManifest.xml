@@ -7,7 +7,7 @@
         android:icon="@mipmap/mpm_ic"
         android:label="Spark">
         <activity
-            android:name=".MainActivity"
+            android:name=".KotlinActivity"
             android:exported="true"
             android:theme="@style/SplashTheme">
             <intent-filter>
@@ -15,6 +15,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".JavaActivity" android:exported="true"/>
 
     </application>
 

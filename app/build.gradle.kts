@@ -1,8 +1,7 @@
-@file:Suppress("UnstableApiUsage","NewerVersionAvailable","UseTomlInstead","GradleDependency")
+@file:Suppress("UnstableApiUsage","NewerVersionAvailable","UseTomlInstead","GradleDependency","DEPRECATION")
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.compose)
 }
 
 android {
@@ -34,19 +33,14 @@ android {
             isShrinkResources = true
         }
     }
-
-    buildFeatures {
-        compose = true
-    }
 }
 
 dependencies {
     implementation("androidx.core:core-ktx:1.17.0")
+    implementation("androidx.appcompat:appcompat:1.7.1")
+    implementation("com.google.android.material:material:1.12.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.2.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.9.3")
-    implementation("androidx.activity:activity-compose:1.8.2")
-    implementation("androidx.compose.ui:ui:1.6.0")
-    implementation("androidx.compose.material:material:1.6.0")
-    implementation("androidx.compose.ui:ui-tooling-preview:1.6.0")
     implementation("androidx.core:core-splashscreen:1.0.1")
 }
 
@@ -74,7 +68,7 @@ tasks.register<Exec>("build_rust") {
         }
     }
 
-    workingDir("$mainDirectory/jni")
+    workingDir("$mainDirectory/rust")
     commandLine(
         cargoPath, "ndk",
         "-t", "arm64-v8a",

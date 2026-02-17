@@ -35,7 +35,7 @@ pub fn make_sum(a:i32,b:i32)->i32{
 }
 
 #[no_mangle]
-pub extern "system" fn Java_com_crescenzi_spark_MainActivity_sum(
+pub extern "system" fn Java_com_crescenzi_spark_JavaActivity_sum(
     _env: *mut std::ffi::c_void,
     _class: *mut std::ffi::c_void,
     a: i32,
@@ -59,7 +59,7 @@ struct Todo{
     completed:bool,
 }
 #[no_mangle]
-pub extern "C" fn Java_com_crescenzi_spark_MainActivity_callApi(
+pub extern "C" fn Java_com_crescenzi_spark_KotlinActivity_callApi(
     _env: *mut std::ffi::c_void,
     _class: *mut std::ffi::c_void,
 ) -> bool {
